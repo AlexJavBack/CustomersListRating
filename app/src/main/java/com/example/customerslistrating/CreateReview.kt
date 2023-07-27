@@ -23,7 +23,6 @@ class CreateReview : AppCompatActivity() {
     lateinit var edtiMultilineText: EditText
     private lateinit var databaseReference : DatabaseReference
     private var classesKey = arrayListOf("Employer","Comment" )
-    private var COMMENT_KEY = "Comment"
     private lateinit var ratingBar  : RatingBar
     private lateinit var textLimit : TextView
     private val limit : Int = 200;
@@ -51,7 +50,7 @@ class CreateReview : AppCompatActivity() {
         val ratingEmployer = ratingBar.rating
         if(!TextUtils.isEmpty(employerName) && !TextUtils.isEmpty(messangerType) && ratingEmployer != 0.0f) {
             val comment = Comment(employerName, "Asa", commentText, ratingEmployer)
-            val employer =  Employer(id, employerName, messangerType, ratingEmployer, commentText)
+            val employer =  Employer(id, employerName, messangerType, ratingEmployer)
             changeKeyFireBase(classesKey[0])
             databaseReference.push().setValue(employer)
             changeKeyFireBase(classesKey[1])

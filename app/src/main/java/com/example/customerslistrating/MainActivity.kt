@@ -154,6 +154,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+    fun showButtonClick(view: View?) {
+        intent = Intent(this,ListEmployers::class.java)
+        startActivity(intent)
+        finish()
+    }
     private fun init() {
         mainBinding.apply {
         }
