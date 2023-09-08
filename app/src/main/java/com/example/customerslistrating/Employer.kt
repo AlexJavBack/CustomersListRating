@@ -1,5 +1,6 @@
 package com.example.customerslistrating
 
+
 class Employer {
     lateinit var id : String
     lateinit var name : String

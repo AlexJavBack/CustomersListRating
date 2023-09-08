@@ -48,6 +48,16 @@ class EmployerListAdapter(val listener : ButtonListenerRV) : RecyclerView.Adapte
     fun getList() : ArrayList<Employer> {
         return employerList
     }
+    fun setFilteredList(filteredList : ArrayList<Employer>) {
+        this.employerList = filteredList
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun removeRVItem(employer: Employer){
+        employerList.remove(employer)
+        notifyDataSetChanged()
+    }
 
 
 

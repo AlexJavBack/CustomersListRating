@@ -8,17 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.customerslistrating.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -35,10 +32,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var textView : TextView
 
-    private lateinit var buttonShow : SignInButton
-    private lateinit var buttonAdd : Button
-
     private lateinit var circleImageView: CircleImageView
+
 
 
     @SuppressLint("CheckResult")
@@ -49,21 +44,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(mainBinding.root)
         circleImageView = findViewById(R.id.ivUserAvatar)
         init()
-        var firebasheUser = FirebaseAuth.getInstance().currentUser
-        if(firebasheUser != null) {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        if(firebaseUser != null) {
             Glide.with(this)
-                .load(firebasheUser.photoUrl.toString())
+                .load(firebaseUser.photoUrl.toString())
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(circleImageView)
         }
-        //mainBinding.bSingIn.setOnClickListener {
-        //    resultLauncher.launch(Intent(googleSignInClient.signInIntent))
-        //}
-        //buttonAdd.setOnClickListener {
-        //    intent = Intent(this, CreateReview::class.java)
-        //    startActivity(intent)
-        //    finish()
-        //}
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -71,12 +58,7 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
-        // [END config_signin]
-
-        // [START initialize_auth]
-        // Initialize Firebase Auth
         auth = Firebase.auth
-        // [END initialize_auth]
     }
 
     // [START on_start_check_user]
@@ -86,12 +68,6 @@ class MainActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         updateUI(currentUser)
     }
-    // [END on_start_check_user]
-
-    // [START onactivityresult]
-    // [END onactivityresult]
-
-    // [START auth_with_google]
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
@@ -109,7 +85,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
     }
-    // [END auth_with_google]
 
     val resultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
@@ -138,10 +113,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUI(user: FirebaseUser?) {
-        var fbuser = FirebaseAuth.getInstance().currentUser
-        if(fbuser != null) {
+        val fbUser = FirebaseAuth.getInstance().currentUser
+        if(fbUser != null) {
             textView = findViewById(R.id.tUserEmail)
-            textView.text = "new message"
+            textView.text = fbUser.photoUrl.toString()
         }
     }
 
